@@ -1,0 +1,83 @@
+@keyframes colorChange {
+  0%,
+  100% {
+    transform: rotate(0deg);
+    scale: 1;
+  }
+  50% {
+    transform: rotate(180deg);
+    scale: 2;
+  }
+}
+
+@keyframes blink {
+  0% {
+    transform: scaleY(1);
+  }
+  10% {
+    transform: scaleY(0);
+  }
+  20% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+[class^="hero-image_svg__green-star-"] {
+  animation: colorChange 2s infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.hero-image_svg__green-star-1 {
+  animation-delay: 1.2s;
+}
+.hero-image_svg__green-star-2 {
+  animation-delay: 1.4s;
+}
+.hero-image_svg__green-star-3 {
+  animation-delay: 1.6s;
+}
+.hero-image_svg__green-star-4 {
+  animation-delay: 1.8s;
+}
+.hero-image_svg__green-star-5 {
+  animation-delay: 2s;
+}
+.hero-image_svg__green-star-6 {
+  animation-delay: 2.2s;
+}
+
+.hero-image_svg__robot__eye-1 {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: blink 4s infinite;
+  animation-delay: 5s;
+}
+
+.hero-image_svg__robot__eye-2 {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: blink 4s infinite;
+  animation-delay: 5s;
+}
+
+.hero-image_svg__gear-1 {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: rotate 10s infinite;
+}
+
+.hero-image_svg__gear-2 {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: rotate 10s infinite;
+}
