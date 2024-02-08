@@ -55,6 +55,15 @@
   }
   body {
     @apply bg-background text-foreground;
-    transition: background-color 0.8s, color 0.7s;
+    transition: background-color 0.7s;
   }
+}
+
+/* Clerk Logo hidden */
+.cl-internal-b3fm6y {
+  display: none;
+}
+
+.theme-transition {
+  transition: background-color 0.7s !important;
 }

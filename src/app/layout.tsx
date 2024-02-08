@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import { ThemeProvider } from "@/app/components/theme-provider";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
-import Navbar from "@/app/components/navbar/Navbar";
-import NavbarLink from "@/app/components/navbar/NavbarLink";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -21,18 +20,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${poppins.className} flex flex-col items-center`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <Navbar>
-            <NavbarLink href="/" title="Home" />
-            <NavbarLink href="/about" title="About Us" />
-            <NavbarLink href="/" title="Features" />
-            <NavbarLink href="/solution" title="Solution" />
-          </Navbar>
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`${poppins.className} flex flex-col items-center`}>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
