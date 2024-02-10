@@ -1,41 +1,40 @@
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogFooter, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { updateNoteSchema, validateUpdateNote } from "@/lib/validation/noteSchema";
+import { createNoteSchema, validateCreateNote } from "@/lib/validation/noteSchema";
 import { zodResolver } from '@hookform/resolvers/zod';
 
-type NoteManageProps = {
+type NoteAddProps = {
     isOpened: boolean;
     setIsOpened: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 };
 
-const NoteManage = ({ isOpened, setIsOpened }: NoteManageProps) => {
-    const form = useForm<updateNoteSchema>({
-        resolver: zodResolver(validateUpdateNote),
+const AddNote = ({ isOpened, setIsOpened }: NoteAddProps) => {
+    const form = useForm<createNoteSchema>({
+        resolver: zodResolver(validateCreateNote),
         defaultValues: {
             title: "",
             content: "",
         },
     });
 
-    function onEdit(input: updateNoteSchema) {
-        console.log(input)
-    }
+    const { reset } = form;
 
-    function onDelete(e: React.MouseEvent<HTMLButtonElement>) {
-        e.preventDefault();
-        console.log('delete')
+    function onAdd(input: createNoteSchema) {
+        console.log(input);
+        setIsOpened(false);
+        reset();
     }
 
     return (
         <Dialog open={isOpened} onOpenChange={setIsOpened}>
-            <DialogContent className="sm:max-w-[425px]">
-                <DialogTitle className="text-center my-2">Update Note</DialogTitle>
+            <DialogContent>
+                <DialogTitle className="text-center my-2">Add Note</DialogTitle>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onEdit)}>
+                    <form onSubmit={form.handleSubmit(onAdd)}>
                         <div className="grid gap-4 py-4">
                             <div className="flex flex-col gap-4">
                                 <FormField
@@ -80,11 +79,8 @@ const NoteManage = ({ isOpened, setIsOpened }: NoteManageProps) => {
                                 />
                             </div>
                         </div>
-                        <div className="flex flex-row flex-nowrap items-center justify-center gap-4">
-                            <Button variant="destructive" className="w-1/2"
-                                onClick={(e) => onDelete(e)}
-                            >Delete Note</Button>
-                            <Button type="submit" className="w-1/2">Save changes</Button>
+                        <div className="flex items-center justify-center">
+                            <Button type="submit" className="w-1/2 my-2">Save changes</Button>
                         </div>
                     </form>
                 </Form>
@@ -93,4 +89,4 @@ const NoteManage = ({ isOpened, setIsOpened }: NoteManageProps) => {
     );
 };
 
-export default NoteManage;
+export default AddNote;
