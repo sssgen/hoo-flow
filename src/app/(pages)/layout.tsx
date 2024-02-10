@@ -10,7 +10,7 @@ export default function layout({
     <>
       <Navbar>
         <NavbarLink href="/" title="Home" />
-        <NavbarLink href="/solution" title="Solution" />
+        <NavbarLink href="/notes" title="Solution" />
       </Navbar>
       {children}
     </>

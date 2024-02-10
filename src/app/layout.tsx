@@ -12,6 +12,7 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "HooFlow",
   description: "",
+  icons: "/favicon.svg"
 };
 
 export default function RootLayout({
