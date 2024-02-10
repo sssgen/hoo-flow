@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 import { BotIcon, PlusIcon } from "lucide-react";
 import AddNote from "@/components/notes/controls/AddNote";
@@ -8,6 +8,8 @@ const ControlButtons = () => {
   const [isAddNoteOpened, setIsAddNoteOpened] = useState(false);
   return (
     <>
+      <AddNote isOpened={isAddNoteOpened} setIsOpened={setIsAddNoteOpened} />
+
       <Button
         className="inline-flex gap-2 text-foreground bg-primary/70"
         variant="default"
@@ -17,7 +19,9 @@ const ControlButtons = () => {
         </span>
         Ask Bot
       </Button>
-      <Button className="inline-flex gap-2" variant="secondary"
+      <Button
+        className="inline-flex gap-2"
+        variant="secondary"
         onClick={() => setIsAddNoteOpened(!isAddNoteOpened)}
       >
         <span>
@@ -25,7 +29,6 @@ const ControlButtons = () => {
         </span>
         Note
       </Button>
-      <AddNote isOpened={isAddNoteOpened} setIsOpened={setIsAddNoteOpened} />
     </>
   );
 };
