@@ -15,7 +15,7 @@ const stats = [
 
 const Stats = () => {
   return (
-    <div>
+    <div className="mt-4 backdrop-blur-sm">
       <div className="w-full h-8 flex flex-row flex-wrap justify-evenly">
         {stats.map((stat, index) => (
           <div key={index} className="inline-flex gap-4 mx-4 items-center">
