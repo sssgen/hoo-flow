@@ -1,5 +1,4 @@
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Form,
@@ -15,16 +14,15 @@ import {
   validateCreateNote,
 } from "@/lib/validation/noteSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createNote } from "@/server/Note";
-import LoadingButton from "@/components/notes/controls/LoadingButton";
+import LoadingButton from "./LoadingButton";
 import { useState } from "react";
 
-type NoteAddProps = {
+type AskAiProps = {
   isOpened: boolean;
   setIsOpened: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 };
 
-const AddNote = ({ isOpened, setIsOpened }: NoteAddProps) => {
+const AskAi = ({ isOpened, setIsOpened }: AskAiProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm<createNoteSchema>({
     resolver: zodResolver(validateCreateNote),
@@ -36,9 +34,9 @@ const AddNote = ({ isOpened, setIsOpened }: NoteAddProps) => {
 
   const { reset } = form;
 
-  async function onAdd(input: createNoteSchema) {
+  async function onAsk(input: createNoteSchema) {
     setIsLoading(true);
-    await createNote(input);
+    alert(input.title);
     setIsLoading(false);
     setIsOpened(false);
     reset();
@@ -47,9 +45,9 @@ const AddNote = ({ isOpened, setIsOpened }: NoteAddProps) => {
   return (
     <Dialog open={isOpened} onOpenChange={setIsOpened}>
       <DialogContent>
-        <DialogTitle className="text-center my-2">Add Note</DialogTitle>
+        <DialogTitle className="text-center my-2">Ask Bot</DialogTitle>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onAdd)}>
+          <form onSubmit={form.handleSubmit(onAsk)}>
             <div className="grid gap-4 py-4">
               <div className="flex flex-col gap-4">
                 <FormField
@@ -57,24 +55,10 @@ const AddNote = ({ isOpened, setIsOpened }: NoteAddProps) => {
                   name="title"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Title</FormLabel>
-                      <FormControl>
-                        <Input className="col-span-3" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="flex flex-col gap-4">
-                <FormField
-                  control={form.control}
-                  name="content"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Content</FormLabel>
+                      <FormLabel>Your question</FormLabel>
                       <FormControl>
                         <Textarea
+                          id="title"
                           className="col-span-3 max-h-[36vh]"
                           {...field}
                         />
@@ -91,7 +75,7 @@ const AddNote = ({ isOpened, setIsOpened }: NoteAddProps) => {
                 className="w-1/2 my-2"
                 isLoading={isLoading}
               >
-                Save
+                Ask
               </LoadingButton>
             </div>
           </form>
@@ -101,4 +85,4 @@ const AddNote = ({ isOpened, setIsOpened }: NoteAddProps) => {
   );
 };
 
-export default AddNote;
+export default AskAi;

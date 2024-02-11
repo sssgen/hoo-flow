@@ -1,7 +1,6 @@
 "use client";
-import { useUser } from "@clerk/nextjs";
+import { SignInButton, useUser } from "@clerk/nextjs";
 import { useClerk } from "@clerk/nextjs";
-import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -14,13 +13,11 @@ const NavbarAuth = () => {
   if (isLoaded) {
     if (isSignedIn === false) {
       return (
-        <Link
-          href="/sign-in"
-          className="transition-all duration-200 py-2 px-4 rounded-full border-2 border-primary/60"
-          style={{ backfaceVisibility: "hidden" }}
-        >
-          Sign in
-        </Link>
+        <SignInButton>
+          <span className="transition-all duration-200 py-2 px-4 rounded-full border-2 border-primary/60 cursor-pointer">
+            Sign in
+          </span>
+        </SignInButton>
       );
     } else {
       return (

@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
 import {
   Form,
   FormControl,
@@ -17,6 +17,7 @@ import {
 } from "@/lib/validation/noteSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { deleteNote, updateNote } from "@/server/Note";
+import LoadingButton from "../controls/LoadingButton";
 
 type NoteManageProps = {
   isOpened: boolean;
@@ -25,6 +26,8 @@ type NoteManageProps = {
 };
 
 const NoteManage = ({ isOpened, setIsOpened, noteId }: NoteManageProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<updateNoteSchema>({
     resolver: zodResolver(validateUpdateNote),
     defaultValues: {
@@ -36,14 +39,18 @@ const NoteManage = ({ isOpened, setIsOpened, noteId }: NoteManageProps) => {
   const { reset } = form;
 
   async function onEdit(input: updateNoteSchema) {
+    setIsLoading(true);
     await updateNote(input, noteId);
     reset();
+    setIsLoading(false);
     setIsOpened(false);
   }
 
   async function onDelete(e: React.MouseEvent<HTMLButtonElement>) {
+    setIsLoading(true);
     e.preventDefault();
     await deleteNote(noteId);
+    setIsLoading(false);
     setIsOpened(false);
   }
 
@@ -62,7 +69,7 @@ const NoteManage = ({ isOpened, setIsOpened, noteId }: NoteManageProps) => {
                     <FormItem>
                       <FormLabel>Title</FormLabel>
                       <FormControl>
-                        <Input id="name" className="col-span-3" {...field} />
+                        <Input className="col-span-3" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -78,7 +85,6 @@ const NoteManage = ({ isOpened, setIsOpened, noteId }: NoteManageProps) => {
                       <FormLabel>Content</FormLabel>
                       <FormControl>
                         <Textarea
-                          id="username"
                           className="col-span-3 max-h-[36vh]"
                           {...field}
                         />
@@ -90,16 +96,21 @@ const NoteManage = ({ isOpened, setIsOpened, noteId }: NoteManageProps) => {
               </div>
             </div>
             <div className="flex flex-row flex-nowrap items-center justify-center gap-4">
-              <Button
+              <LoadingButton
                 variant="destructive"
                 className="w-1/2"
-                onClick={(e) => onDelete(e)}
+                onClick={(e: any) => onDelete(e)}
+                isLoading={isLoading}
               >
                 Delete Note
-              </Button>
-              <Button type="submit" className="w-1/2">
+              </LoadingButton>
+              <LoadingButton
+                type="submit"
+                className="w-1/2"
+                isLoading={isLoading}
+              >
                 Save changes
-              </Button>
+              </LoadingButton>
             </div>
           </form>
         </Form>
