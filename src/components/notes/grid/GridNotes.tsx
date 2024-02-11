@@ -7,7 +7,12 @@ const GridNotes = async () => {
     <div className="w-full mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
       {notes.length >= 1 ? (
         notes.map((note) => (
-          <Note noteId={note.id} title={note.title} content={note.content} />
+          <Note
+            key={note.id}
+            noteId={note.id}
+            title={note.title}
+            content={note.content}
+          />
         ))
       ) : (
         <h2 className="col-span-full text-center text-muted-foreground">
