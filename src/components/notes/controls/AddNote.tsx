@@ -84,7 +84,7 @@ const AddNote = ({ isOpened, setIsOpened }: NoteAddProps) => {
             </div>
             <div className="flex items-center justify-center">
               <Button type="submit" className="w-1/2 my-2">
-                Save changes
+                Save
               </Button>
             </div>
           </form>

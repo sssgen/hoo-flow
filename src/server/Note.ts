@@ -9,7 +9,6 @@ import {
 } from "@/lib/validation/noteSchema";
 import { revalidatePath } from "next/cache";
 import { getEmbedding } from "@/lib/openai";
-import { title } from "process";
 import { notesIndex } from "@/lib/pinecone";
 
 const prisma = new PrismaClient();
