@@ -28,36 +28,43 @@ export default authMiddleware({
   publicRoutes: ["/sign-in", "/sign-up", "/"],
 
   afterAuth(auth, req) {
-    const url = req.nextUrl.clone();
-    const isPublicRoute = auth.isPublicRoute;
-    const isLoggedIn = !!auth.userId;
+    try {
+      const url = req.nextUrl.clone();
+      const isPublicRoute = auth.isPublicRoute;
+      const isLoggedIn = !!auth.userId;
 
-    if (!isLoggedIn && !isPublicRoute) {
-      const signInUrl = `${req.nextUrl.origin}/sign-in`;
-      const res = NextResponse.redirect(signInUrl);
-      setCookie(res, "returnTo", url.pathname, "Secure; SameSite=Lax");
-      return res;
-    } else if (isLoggedIn) {
-      const cookies = req.headers.get("cookie");
-      let returnTo = getCookieValue(cookies ? cookies : undefined, "returnTo");
-
-      // Ensure that returnTo is not null before attempting to redirect
-      returnTo = returnTo ?? undefined; // Convert null to undefined if necessary
-
-      if (returnTo) {
-        const origin = process.env.ORIGIN;
-        const res = NextResponse.redirect(`${origin}${returnTo}`);
-        setCookie(
-          res,
-          "returnTo",
-          "",
-          "Max-Age=0; HttpOnly; Secure; SameSite=Lax"
-        );
+      if (!isLoggedIn && !isPublicRoute) {
+        const signInUrl = `${req.nextUrl.origin}/sign-in`;
+        const res = NextResponse.redirect(signInUrl);
+        setCookie(res, "returnTo", url.pathname, "Secure; SameSite=Lax");
         return res;
-      }
-    }
+      } else if (isLoggedIn) {
+        const cookies = req.headers.get("cookie");
+        let returnTo = getCookieValue(
+          cookies ? cookies : undefined,
+          "returnTo"
+        );
 
-    return NextResponse.next();
+        // Ensure that returnTo is not null before attempting to redirect
+        returnTo = returnTo ?? undefined; // Convert null to undefined if necessary
+
+        if (returnTo) {
+          const origin = process.env.ORIGIN;
+          const res = NextResponse.redirect(`${origin}${returnTo}`);
+          setCookie(
+            res,
+            "returnTo",
+            "",
+            "Max-Age=0; HttpOnly; Secure; SameSite=Lax"
+          );
+          return res;
+        }
+      }
+
+      return NextResponse.next();
+    } catch (error: any) {
+      console.error(error.digest);
+    }
   },
 });
 
