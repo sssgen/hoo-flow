@@ -14,6 +14,8 @@ const elementsStyle = {
   footerActionText: "text-foreground focus:shadow-sm focus:shadow-primary/50",
   formFieldInput:
     "bg-background text-foreground focus:shadow-sm focus:shadow-primary/50",
+  alertText: "text-foreground",
+  alert: "border border-muted-foreground/30",
 };
 
 const SignInBox = async () => {

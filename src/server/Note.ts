@@ -32,22 +32,22 @@ export async function getNotesByUserId(): Promise<Note[]> {
   }
 }
 
-export async function createNote(schema: createNoteSchema) {
+export async function createNote(input: createNoteSchema) {
   const { userId } = auth();
 
   if (!userId) {
     throw Error("Not authenticated!");
   }
 
-  const validated = validateCreateNote.safeParse(schema);
+  const validated = validateCreateNote.safeParse(input);
 
   if (!validated.success) {
     throw new Error(`Failed schema validation: ${validated.error}`);
   }
 
-  const embedding = await getEmbeddingForNote(schema.title, schema.content);
+  const embedding = await getEmbeddingForNote(input.title, input.content);
 
-  const note = await prisma.$transaction(async (tx) => {
+  await prisma.$transaction(async (tx) => {
     try {
       const note = await tx.note.create({
         data: {
@@ -80,16 +80,19 @@ export async function deleteNote(nodeId: string) {
   if (!userId) {
     throw Error("Not authenticated!");
   }
+  await prisma.$transaction(async (tx) => {
+    try {
+      await tx.note.delete({
+        where: {
+          id: nodeId,
+        },
+      });
 
-  try {
-    await prisma.note.delete({
-      where: {
-        id: nodeId,
-      },
-    });
-  } catch (error) {
-    throw new Error(`Failed to create note: ${error}`);
-  }
+      await notesIndex.deleteOne(nodeId);
+    } catch (error) {
+      throw new Error(`Failed to create note: ${error}`);
+    }
+  });
 
   revalidatePath("/notes");
 }
@@ -107,19 +110,33 @@ export async function updateNote(input: updateNoteSchema, noteId: string) {
     throw new Error(`Failed schema validation: ${validated.error}`);
   }
 
-  try {
-    await prisma.note.update({
-      where: {
-        id: noteId,
-      },
-      data: {
-        title: validated.data.title,
-        content: validated.data.content || "",
-      },
-    });
-  } catch (error) {
-    throw new Error(`Failed to update note: ${error}`);
-  }
+  const embedding = await getEmbeddingForNote(input.title, input.content);
+
+  await prisma.$transaction(async (tx) => {
+    try {
+      const updatedNote = await tx.note.update({
+        where: {
+          id: noteId,
+        },
+        data: {
+          title: validated.data.title,
+          content: validated.data.content || "",
+        },
+      });
+
+      await notesIndex.upsert([
+        {
+          id: updatedNote.id,
+          values: embedding,
+          metadata: { userId },
+        },
+      ]);
+
+      return updatedNote;
+    } catch (error) {
+      throw new Error(`Failed to update note: ${error}`);
+    }
+  });
 
   revalidatePath("/notes");
 }
