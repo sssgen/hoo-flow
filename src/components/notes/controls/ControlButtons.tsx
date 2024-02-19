@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { BotIcon, PlusIcon } from "lucide-react";
 import AddNote from "@/components/notes/controls/AddNote";
 import { useState } from "react";
-import AskAi from "@/components/notes/controls/AskAi";
+import AIChatBox from "@/components/notes/chat/AIChatBox";
 
 const ControlButtons = () => {
   const [isAddNoteOpened, setIsAddNoteOpened] = useState(false);
@@ -11,7 +11,7 @@ const ControlButtons = () => {
   return (
     <>
       <AddNote isOpened={isAddNoteOpened} setIsOpened={setIsAddNoteOpened} />
-      <AskAi isOpened={isAskAiOpened} setIsOpened={setIsAskAiOpened} />
+      <AIChatBox isOpened={isAskAiOpened} setIsOpened={setIsAskAiOpened} />
 
       <Button
         className="inline-flex gap-2 text-foreground bg-primary/70"

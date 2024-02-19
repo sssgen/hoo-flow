@@ -1,5 +1,5 @@
 "use server";
-import { Note, PrismaClient } from "@prisma/client";
+import { Note } from "@prisma/client";
 import { auth } from "@clerk/nextjs";
 import {
   createNoteSchema,
@@ -10,8 +10,7 @@ import {
 import { revalidatePath } from "next/cache";
 import { getEmbedding } from "@/lib/openai";
 import { notesIndex } from "@/lib/pinecone";
-
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma";
 
 export async function getNotesByUserId(): Promise<Note[]> {
   const { userId } = auth();
