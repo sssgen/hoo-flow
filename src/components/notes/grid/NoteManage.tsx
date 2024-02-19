@@ -18,40 +18,58 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { deleteNote, updateNote } from "@/server/Note";
 import LoadingButton from "../controls/LoadingButton";
+import type { Note } from "@prisma/client";
+import { toast } from "@/components/ui/use-toast";
 
 type NoteManageProps = {
   isOpened: boolean;
   setIsOpened: (value: boolean | ((prevVar: boolean) => boolean)) => void;
-  noteId: string;
+  note: Note;
 };
 
-const NoteManage = ({ isOpened, setIsOpened, noteId }: NoteManageProps) => {
+const NoteManage = ({ isOpened, setIsOpened, note }: NoteManageProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<updateNoteSchema>({
     resolver: zodResolver(validateUpdateNote),
     defaultValues: {
-      title: "",
-      content: "",
+      title: note ? note.title : "",
+      content: note ? note.content : "",
     },
   });
 
-  const { reset } = form;
-
   async function onEdit(input: updateNoteSchema) {
-    setIsLoading(true);
-    await updateNote(input, noteId);
-    reset();
-    setIsLoading(false);
-    setIsOpened(false);
+    try {
+      setIsLoading(true);
+
+      await updateNote(input, note.id);
+
+      form.reset();
+      setIsLoading(false);
+      setIsOpened(false);
+    } catch (e) {
+      toast({
+        title: "An error occured while updating note",
+        description: `${e}`,
+      })
+    }
   }
 
   async function onDelete(e: React.MouseEvent<HTMLButtonElement>) {
-    setIsLoading(true);
-    e.preventDefault();
-    await deleteNote(noteId);
-    setIsLoading(false);
-    setIsOpened(false);
+    e.preventDefault()
+    try {
+      setIsLoading(true);
+
+      await deleteNote(note.id);
+
+      setIsLoading(false);
+      setIsOpened(false);
+    } catch (e) {
+      toast({
+        title: "An error occured while deleting note",
+        description: `${e}`,
+      })
+    }
   }
 
   return (

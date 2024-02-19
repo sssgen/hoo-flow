@@ -9,9 +9,7 @@ const GridNotes = async () => {
         notes.map((note) => (
           <Note
             key={note.id}
-            noteId={note.id}
-            title={note.title}
-            content={note.content}
+            note={note}
           />
         ))
       ) : (

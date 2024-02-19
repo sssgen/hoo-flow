@@ -8,14 +8,9 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import NoteManage from "./NoteManage";
+import type { Note } from "@prisma/client";
 
-type NoteProps = {
-  title: string;
-  content?: string;
-  noteId: string;
-};
-
-const Note = ({ title, content, noteId }: NoteProps) => {
+const Note = ({ note }: { note: Note }) => {
   const [isNoteOpened, setIsNoteOpened] = useState(false);
   return (
     <>
@@ -24,18 +19,18 @@ const Note = ({ title, content, noteId }: NoteProps) => {
         className="transition-all hover:scale-[1.01] hover:shadow-lg hover:shadow-muted-foreground"
       >
         <CardHeader>
-          <CardTitle className="inline-flex justify-between">{title}</CardTitle>
+          <CardTitle className="inline-flex justify-between">{note.title}</CardTitle>
         </CardHeader>
         <CardContent>
           <CardDescription className="whitespace-pre-line">
-            {content}
+            {note.content}
           </CardDescription>
         </CardContent>
       </Card>
       <NoteManage
         isOpened={isNoteOpened}
         setIsOpened={setIsNoteOpened}
-        noteId={noteId}
+        note={note}
       />
     </>
   );
