@@ -26,16 +26,28 @@ export default function AIChatBox({ isOpened, setIsOpened }: AIChatBoxProps) {
             isOpened ? "fixed" : "hidden",
         )}
         >
-            <div className="w-full flex items-center justify-end translate-y-9 -translate-x-4">
-                <button className="" onClick={() => setIsOpened(!isOpened)}>
-                    <span>
-                        <XCircle className="h-6 w-6" />
-                    </span>
-                </button>
-            </div>
             <div className="flex h-[600px] flex-col bg-background border shadow-xl relative justify-between">
-                <div className="w-full h-12 border-b items-center flex pl-6">
+                <div className="w-full border-b items-center flex px-3 py-3 justify-between">
                     <h2>Messages</h2>
+                    <button className="" onClick={() => setIsOpened(!isOpened)}>
+                        <span>
+                            <XCircle className="h-6 w-6" />
+                        </span>
+                    </button>
+                </div>
+                <div className="h-full px-4">
+                    <p>Message</p>
+                    <p>Message</p>
+                    <p>Message</p>
+                    <p>Message</p>
+                    <p>Message</p>
+                    <p>Message</p>
+                    <p>Message</p>
+                    <p>Message</p>
+                    <p>Message</p>
+                    <p>Message</p>
+                    <p>Message</p>
+                    <p>Message</p>
                 </div>
                 <div>
                     <form onSubmit={handleSubmit} className="m-3 flex gap-1">
@@ -44,7 +56,7 @@ export default function AIChatBox({ isOpened, setIsOpened }: AIChatBoxProps) {
                             onChange={handleInputChange}
                             placeholder="Write something.."
                         />
-                        <Button type="submit" variant="ghost" className="rounded-full">
+                        <Button type="submit" variant="ghost" className="rounded-full border border-foreground/10 h-[38px] w-[38px]">
                             <span>
                                 <SendIcon className="h-5 w-5 text-foreground" />
                             </span>
