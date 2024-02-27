@@ -3,7 +3,7 @@ import Stats from "@/components/home/stats/Stats";
 
 export default function Home() {
   return (
-    <main className="container px-4 min-h-screen w-full pt-[50px] lg:pt-0">
+    <main className="sm:container px-4 min-h-screen w-full pt-[50px] lg:pt-0">
       <Hero />
       <Stats />
     </main>

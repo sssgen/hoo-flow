@@ -6,9 +6,9 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <div className="min-h-[92vh] flex flex-row justify-between items-center pt-[120px]">
+    <div className="min-h-[92vh] pt-[80px]">
       <div className="w-full h-fit flex flex-col lg:flex-row lg:gap-0 items-center justify-between">
-        <div className="w-full lg:w-1/2 lg:-translate-y-20">
+        <div className="w-full">
           <h1 className="text-6xl font-bold line-clamp-5 backdrop-blur-sm text-center lg:text-start">
             Welcome to Hoo
             <span className="text-primary">Flow</span>
@@ -33,7 +33,7 @@ const Hero = () => {
             </Link>
           </div>
         </div>
-        <div className="relative lg:absolute -z-10 right-0 w-full h-full max-h-[700px] max-w-[700px]">
+        <div className="pointer-events-none w-full h-full max-h-[700px] max-w-[700px]">
           <HeroImage />
         </div>
       </div>
