@@ -22,12 +22,12 @@ HooFlow is an innovative AI-powered tool designed to revolutionize the way users
    ```bash
    npm install
 4. Set up your .env file:
-   -**NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY** - can be found on [clerk.com](https://clerk.com/);
-   -**CLERK_SECRET_KEY** - can be found on [clerk.com](https://clerk.com/);
-   -**DATABASE_URL** - your database url;
-   -**ORIGIN** - root domain, for example: http://localhost:3000/
-   -**OPENAI_API_KEY** - can be found on [platform.openai.com](https://platform.openai.com/overview);
-   -**PINECONE_API_KEY** - can be found on [www.pinecone.io](https://www.pinecone.io/);
+   - **NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY** - can be found on [clerk.com](https://clerk.com/);
+   - **CLERK_SECRET_KEY** - can be found on [clerk.com](https://clerk.com/);
+   - **DATABASE_URL** - your database url;
+   - **ORIGIN** - root domain, for example: http://localhost:3000/
+   - **OPENAI_API_KEY** - can be found on [platform.openai.com](https://platform.openai.com/overview);
+   - **PINECONE_API_KEY** - can be found on [www.pinecone.io](https://www.pinecone.io/);
 5. Run application:
      ```bash
      npm run dev
