@@ -22,7 +22,7 @@ const Note = ({ note }: { note: Note }) => {
           <CardTitle className="inline-flex justify-between">{note.title}</CardTitle>
         </CardHeader>
         <CardContent>
-          <CardDescription className="whitespace-pre-line">
+          <CardDescription className="whitespace-pre-line max-h-[150px] truncate">
             {note.content}
           </CardDescription>
         </CardContent>

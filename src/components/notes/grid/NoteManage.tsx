@@ -103,7 +103,7 @@ const NoteManage = ({ isOpened, setIsOpened, note }: NoteManageProps) => {
                       <FormLabel>Content</FormLabel>
                       <FormControl>
                         <Textarea
-                          className="col-span-3 max-h-[36vh]"
+                          className="col-span-3 h-[32vh] max-h-[36vh]"
                           {...field}
                         />
                       </FormControl>
